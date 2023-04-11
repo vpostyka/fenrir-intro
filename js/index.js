@@ -26,23 +26,20 @@ const skillsSection = document.getElementById('skills');
 const skillsList = skillsSection.querySelector('ul');
 
 // Loop through the skills array and add each skill to the list
-for (let i = 0; i < skills.length; i++) {
-	// Create a new list item element
-	const skill = document.createElement('li');
-
-	// Set the inner text of the list item element to the current skill
-	skill.innerText = skills[i];
-
-	// Append the list item element to the unordered list
-	skillsList.appendChild(skill);
+for (let skill of skills) {
+ let li = document.createElement('li');
+ li.innerText = skill;
+ skillsList.appendChild(li);
 }
-
 let messageForm = document.querySelector("[name='leave_message']");
-let messageSection = document.querySelector("[id='messages']");
+let messageSection = document.getElementById('messages');
 let messageList = messageSection.querySelector('ul');
-let removeButton = document.createElement('button');
-let editButton = document.createElement('button');
-let newMessage = document.createElement('li');
+
+if (messageList.children.length === 0 ) {
+	messageSection.hidden = true;
+} else {
+	messageSection.hidden = false;
+}
 messageForm.addEventListener('submit', (event) => {
 	event.preventDefault();
 	let name = event.target.usersName.value;
@@ -52,6 +49,10 @@ messageForm.addEventListener('submit', (event) => {
 	console.log('Name:', name);
 	console.log('Email:', email);
 	console.log('Message:', message);
+
+	let removeButton = document.createElement('button');
+	let editButton = document.createElement('button');
+	let newMessage = document.createElement('li');
 	newMessage.innerHTML = `<a  href="mailto:${email} ">${name}  </a><span>wrote: ${message} </span>`;
 	editButton.innerText = 'edit';
 	editButton.type = 'button';
@@ -70,8 +71,10 @@ messageForm.addEventListener('submit', (event) => {
 	});
 	editButton.addEventListener('click', function (){
 		let editedMessage = prompt('Enter the new message:',message);
-		const messageElement = this.parentNode.querySelector('span');
-		messageElement.textContent = editedMessage;
+		newMessage.innerHTML = `<a  href="mailto:${email} ">${name}  </a><span>wrote: ${editedMessage} </span>`
 		message = editedMessage;
+		newMessage.appendChild(editButton);
+		newMessage.appendChild(removeButton);
+		messageList.appendChild(newMessage);
 	});
 });
