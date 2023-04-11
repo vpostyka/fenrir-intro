@@ -39,7 +39,8 @@ for (let i = 0; i < skills.length; i++) {
 
 // Select the message form by name
 const messageForm = document.querySelector("[name='leave_message']");
-
+const messageSection = document.querySelector('#messages');
+const messageList = messageSection.querySelector('ul');
 // Add event listener for form submit
 messageForm.addEventListener('submit', (event) => {
 	event.preventDefault();
@@ -49,8 +50,7 @@ messageForm.addEventListener('submit', (event) => {
 	console.log('Name:', name);
 	console.log('Email:', email);
 	console.log('Message:', message);
-	const messageSection = document.querySelector('#messages');
-	const messageList = messageSection.querySelector('ul');
+	
 	const newMessage = document.createElement('li');
 	newMessage.innerHTML = `<a href="mailto:${email} ">${name}  </a><span>wrote: ${message} </span>`;
 	const removeButton = document.createElement('button');
