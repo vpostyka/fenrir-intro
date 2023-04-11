@@ -43,8 +43,8 @@ const messageForm = document.querySelector("[name='leave_message']");
 // Add event listener for form submit
 messageForm.addEventListener('submit', (event) => {
 	event.preventDefault();
-	const name = event.target.usersName.value;
-	const email = event.target.usersEmail.value;
+	let name = event.target.usersName.value;
+	let email = event.target.usersEmail.value;
 	let message = event.target.usersMessage.value;
 	console.log('Name:', name);
 	console.log('Email:', email);
