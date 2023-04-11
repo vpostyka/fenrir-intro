@@ -38,7 +38,7 @@ for (let i = 0; i < skills.length; i++) {
 }
 
 // Select the message form by name
-const messageForm = document.forms.leave_message;
+const messageForm = document.querySelector("[name='leave_message']");
 
 // Add event listener for form submit
 messageForm.addEventListener('submit', function (event) {
