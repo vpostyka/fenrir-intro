@@ -37,31 +37,41 @@ for (let i = 0; i < skills.length; i++) {
 	skillsList.appendChild(skill);
 }
 
-// Select the message form by name
-const messageForm = document.querySelector("[name='leave_message']");
-const messageSection = document.querySelector('#messages');
-const messageList = messageSection.querySelector('ul');
-// Add event listener for form submit
+let messageForm = document.querySelector("[name='leave_message']");
+let messageSection = document.querySelector("[id='messages']");
+let messageList = messageSection.querySelector('ul');
+let removeButton = document.createElement('button');
+let editButton = document.createElement('button');
+let newMessage = document.createElement('li');
 messageForm.addEventListener('submit', (event) => {
 	event.preventDefault();
 	let name = event.target.usersName.value;
 	let email = event.target.usersEmail.value;
 	let message = event.target.usersMessage.value;
+
 	console.log('Name:', name);
 	console.log('Email:', email);
 	console.log('Message:', message);
-	
-	const newMessage = document.createElement('li');
-	newMessage.innerHTML = `<a href="mailto:${email} ">${name}  </a><span>wrote: ${message} </span>`;
-	const removeButton = document.createElement('button');
+	newMessage.innerHTML = `<a  href="mailto:${email} ">${name}  </a><span>wrote: ${message} </span>`;
+	editButton.innerText = 'edit';
+	editButton.type = 'button';
 	removeButton.innerText = 'remove';
 	removeButton.type = 'button';
-	removeButton.addEventListener('click', function () {
-		const entry = removeButton.parentNode;
-		entry.remove();
-	});
+
+	newMessage.appendChild(editButton);
 	newMessage.appendChild(removeButton);
 	messageList.appendChild(newMessage);
 	messageForm.reset();
 	messageSection.style.display = 'block';
+
+	removeButton.addEventListener('click', function () {
+		const entry = removeButton.parentNode;
+		entry.remove();
+	});
+	editButton.addEventListener('click', function (){
+		let editedMessage = prompt('Enter the new message:',message);
+		const messageElement = this.parentNode.querySelector('span');
+		messageElement.textContent = editedMessage;
+		message = editedMessage;
+	});
 });
