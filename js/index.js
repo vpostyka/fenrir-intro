@@ -41,7 +41,7 @@ for (let i = 0; i < skills.length; i++) {
 const messageForm = document.querySelector("[name='leave_message']");
 
 // Add event listener for form submit
-messageForm.addEventListener('submit', function (event) {
+messageForm.addEventListener('submit', (event) => {
 	event.preventDefault();
 	const name = event.target.usersName.value;
 	const email = event.target.usersEmail.value;
