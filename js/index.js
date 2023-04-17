@@ -34,12 +34,7 @@ for (let skill of skills) {
 let messageForm = document.querySelector("[name='leave_message']");
 let messageSection = document.getElementById('messages');
 let messageList = messageSection.querySelector('ul');
-
-if (messageList.children.length === 0 ) {
-	messageSection.hidden = true;
-} else {
-	messageSection.hidden = false;
-}
+messageSection.hidden = true;
 messageForm.addEventListener('submit', (event) => {
 	event.preventDefault();
 	let name = event.target.usersName.value;
@@ -53,6 +48,7 @@ messageForm.addEventListener('submit', (event) => {
 	let removeButton = document.createElement('button');
 	let editButton = document.createElement('button');
 	let newMessage = document.createElement('li');
+
 	newMessage.innerHTML = `<a  href="mailto:${email} ">${name}  </a><span>wrote: ${message} </span>`;
 	editButton.innerText = 'edit';
 	editButton.type = 'button';
@@ -64,10 +60,15 @@ messageForm.addEventListener('submit', (event) => {
 	messageList.appendChild(newMessage);
 	messageForm.reset();
 	messageSection.style.display = 'block';
+	messageSection.hidden = false;
 
 	removeButton.addEventListener('click', function () {
 		const entry = removeButton.parentNode;
 		entry.remove();
+		console.log(messageSection.childElementCount)
+		if (messageList.childElementCount === 0){
+			messageSection.style.display = 'none';
+		};
 	});
 	editButton.addEventListener('click', function (){
 		let editedMessage = prompt('Enter the new message:',message);
