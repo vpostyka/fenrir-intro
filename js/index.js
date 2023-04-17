@@ -58,7 +58,6 @@ messageForm.addEventListener('submit', (event) => {
 	newMessage.setAttribute('id', uid);
 
 	entryById[uid] = {usersName: name, usersEmail: email, usersMessage:message};
-	console.log("BEFORE : "+ entryById[uid]);
 	newMessage.appendChild(makeRemoveButton(uid));
 	newMessage.appendChild(makeEditButton(uid));
 
@@ -72,7 +71,7 @@ function makeRemoveButton(uid){
 	let removeButton = document.createElement('button');
 	removeButton.innerText = 'remove';
 	removeButton.type = 'button';
-	removeButton.addEventListener('click', () => {
+	removeButton.addEventListener('click',  () => {
 		let entry = removeButton.parentNode;
 		let uid1 = entry.getAttribute('id');
 		delete entryById[uid1];
@@ -80,8 +79,7 @@ function makeRemoveButton(uid){
 		if (messageList.childElementCount === 0){
 			messageSection.style.display = 'none';
 		};
-		console.log("AFTER DELETE : " + entryById)
-	})
+	});
 	return removeButton;
 };
 
@@ -100,7 +98,7 @@ function makeEditButton(uid) {
 			entryById[uid].usersName = event.target.usersName.value;
 			entryById[uid].usersEmail = event.target.usersEmail.value;
 			entryById[uid].usersMessage = event.target.usersMessage.value;
-			entry.innerHTML = `<a href="mailto:${entryById[uid].usersEmail}">${entryById[uid].usersName}</a><span>wrote: ${entryById[uid].usersMessage}</span>`;
+			entry.innerHTML = `<a href="mailto:${entryById[uid].usersEmail} "> ${entryById[uid].usersName} </a><span>wrote: ${entryById[uid].usersMessage}</span>`;
 			entry.appendChild(makeRemoveButton(uid));
 			entry.appendChild(makeEditButton(uid));
 			clonedForm.remove();
