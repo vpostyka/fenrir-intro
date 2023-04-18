@@ -51,14 +51,14 @@ messageForm.addEventListener('submit', (event) => {
 	console.log('Name:', name);
 	console.log('Email:', email);
 	console.log('Message:', message);
-	const uid = makeId();
+	let uid = makeId();
 	let newMessage = document.createElement('li');
 
 	newMessage.innerHTML = `<a  href="mailto:${email} ">${name}  </a><span>wrote: ${message} </span>`;
 	newMessage.setAttribute('id', uid);
 
 	entryById[uid] = {usersName: name, usersEmail: email, usersMessage:message};
-	newMessage.appendChild(makeRemoveButton(uid));
+	newMessage.appendChild(makeRemoveButton());
 	newMessage.appendChild(makeEditButton(uid));
 
 	messageList.appendChild(newMessage);
@@ -67,10 +67,11 @@ messageForm.addEventListener('submit', (event) => {
 	messageSection.hidden = false;
 });
 
-function makeRemoveButton(uid){
+function makeRemoveButton(){
 	let removeButton = document.createElement('button');
 	removeButton.innerText = 'remove';
 	removeButton.type = 'button';
+	removeButton.className = 'remove-button';
 	removeButton.addEventListener('click',  () => {
 		let entry = removeButton.parentNode;
 		let uid1 = entry.getAttribute('id');
@@ -83,27 +84,38 @@ function makeRemoveButton(uid){
 	return removeButton;
 };
 
-function makeEditButton(uid) {
-	const editButton = document.createElement('button');
+function makeEditButton() {
+	let editButton = document.createElement('button');
 	editButton.innerText = 'edit';
 	editButton.type = 'button';
 	editButton.addEventListener('click', () => {
-		const entry = editButton.parentNode;
+		if (editButton) {
+			editButton.style.display = 'none';
+		}
+		let entry = editButton.parentNode;
+		let uid = entry.getAttribute('id');
+		let removeButton = entry.querySelector('button.remove-button');
+		if (removeButton) {
+			removeButton.style.display = 'none';
+		}
+
 		let clonedForm = messageForm.cloneNode(true);
 		clonedForm.usersName.value = entryById[uid].usersName;
 		clonedForm.usersEmail.value = entryById[uid].usersEmail;
 		clonedForm.usersMessage.value = entryById[uid].usersMessage;
+		entry.appendChild(clonedForm);
 		clonedForm.addEventListener('submit', function editMessage(event) {
 			event.preventDefault();
 			entryById[uid].usersName = event.target.usersName.value;
 			entryById[uid].usersEmail = event.target.usersEmail.value;
 			entryById[uid].usersMessage = event.target.usersMessage.value;
-			entry.innerHTML = `<a href="mailto:${entryById[uid].usersEmail} "> ${entryById[uid].usersName} </a><span>wrote: ${entryById[uid].usersMessage}</span>`;
-			entry.appendChild(makeRemoveButton(uid));
-			entry.appendChild(makeEditButton(uid));
-			clonedForm.remove();
+			let newEntry = document.createElement('div');
+			newEntry.setAttribute('id', uid);
+			newEntry.innerHTML = `<a href="mailto:${entryById[uid].usersEmail} "> ${entryById[uid].usersName} </a><span>wrote: ${entryById[uid].usersMessage}</span>`;
+			newEntry.appendChild(makeRemoveButton());
+			newEntry.appendChild(makeEditButton());
+			entry.parentNode.replaceChild(newEntry, entry);
 		});
-		entry.appendChild(clonedForm);
 	});
 	return editButton;
 };
