@@ -11,7 +11,17 @@
   </head>
 
   <body>
-    <section>
+  <header class="header">
+	  <a href="#" class="logo">Portfolio</a>
+	  <nav class="navbar">
+		  <a href="#about"> About </a>
+		  <a href="#experience"> Experience</a>
+		  <a href="#skills"> Skills</a>
+		  <a href="#connect"> Connect</a>
+		  <a href="#leave_message"> Message Me!</a>
+	  </nav>
+  </header>
+    <section id="about">
       <h1>About</h1>
       <img src="images/picture.png">
       <p>Hi, my name is Vladimir. <br> I have a diverse background in the field of computer science, with experience in technical support, <br>manual and automated software testing, and web development. I am proficient in HTML, CSS,<br> JavaScript, Python, and SQL, which enables me to take on a wide range of challenges in my work.<br> I have a keen eye for detail and a commitment to ensuring high-quality products.<br> My ability to code in multiple languages indicates that I am adaptable and versatile, and able to tackle a variety of tasks with ease. Overall, I have a solid foundation in both technical and practical skills, making me a valuable asset to any team or project in the field of computer science.</p>
@@ -24,28 +34,28 @@
       <h2>Skills</h2>
       <ul></ul>
     </section>
-    <section>
+    <section id="connect">
       <h1>Connect</h1>
       <p>email: vlad@vlad.com</p>
       <p>github: vpostyka@github.com</p>
       <p>linkedIn: vlad</p>
     </section>
-    <section>
-      <h2>Leave message</h2>
+    <section id="leave_message">
+      <h2>Message Me!</h2>
       <form name="leave_message">
-        <label for="usersName">Name:</label>
+        <label for="1">Name:</label>
         <br>
         <input id="1" type="text" name="usersName" required />
         <br>
-        <label for="usersEmail">Email:</label>
+        <label for="2">Email:</label>
         <br>
         <input id="2" type="email" name="usersEmail" required />
         <br>
-        <label for="usersMessage">Message: </label>
+        <label for="3">Message: </label>
         <br>
         <textarea id="3" name="usersMessage" required></textarea>
         <br>
-        <button type="submit">Submit</button>
+        <button type="submit" class="btn">Submit</button>
       </form>
     </section>
     <section id="messages">
