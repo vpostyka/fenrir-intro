@@ -134,3 +134,74 @@ function makeEditButton() {
 	return editButton;
 };
 
+//============================================AJAX===============================================
+
+// let githubRequest = new XMLHttpRequest();
+// githubRequest.open('GET', 'https://api.github.com/users/vpostyka/repos');
+// githubRequest.send();
+// githubRequest.addEventListener('load',  function ()  {
+// 	let repositories = JSON.parse(this.response);
+// 	console.log(repositories)
+// 	let projectSection = document.querySelector('#projects');
+// 	let projectList = projectSection.querySelector('ul');
+// 	for(let i=0; i < repositories.length; i++){
+// 		let project = document.createElement('li');
+// 		let projectLink = document.createElement('a');
+// 		projectLink.href = repositories[i].html_url;
+// 		projectLink.innerText = repositories[i].name;
+// 		project.appendChild(projectLink);
+//
+// 		let description = document.createElement('p');
+// 		if(repositories[i].description == null){
+// 			description.innerText = 'Description: Nothing yet'
+// 		} else {
+// 			description.innerText = 'Description: ' + repositories[i].description;
+// 		}
+// 		project.appendChild(description);
+//
+// 		let createdAt = document.createElement('p');
+// 		createdAt.innerText = 'Created at: ' + new Date(repositories[i].created_at).toLocaleDateString();
+// 		project.appendChild(createdAt);
+//
+// 		projectList.appendChild(project);
+// 	}
+// });
+//===============================FETCH=========================================================================
+
+let apiUrl = 'https://api.github.com/users/vpostyka/repos';
+fetch(apiUrl)
+	.then(function(response) {
+		return response.json();
+	})
+	.then(function(repositories) {
+		let projectSection = document.getElementById('projects');
+		let projectList = projectSection.querySelector('ul');
+		for (let i = 0; i < repositories.length; i++) {
+			let project = document.createElement('li');
+
+			let projectLink = document.createElement('a');
+			projectLink.href = repositories[i].html_url;
+			projectLink.innerText = repositories[i].name;
+			project.appendChild(projectLink);
+
+
+			let description = document.createElement('p');
+			if(repositories[i].description == null){
+			description.innerText = 'Description: Nothing yet'
+			} else {
+			description.innerText = 'Description: ' + repositories[i].description;
+			}
+			project.appendChild(description);
+
+			let createdAt = document.createElement('p');
+			createdAt.innerText = 'Created at: ' + new Date(repositories[i].created_at).toLocaleDateString();
+			project.appendChild(createdAt);
+
+			projectList.appendChild(project);
+		}
+		projectList.style.listStyleType = 'none';
+		projectList.style.padding = '0';
+	})
+	.catch(function(error) {
+		console.error('Error:', error);
+	});
